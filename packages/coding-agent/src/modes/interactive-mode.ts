@@ -1481,10 +1481,12 @@ export class InteractiveMode implements InteractiveModeContext {
 
 	#getPlanReviewHelpText(): string {
 		const externalEditorKey = this.keybindings.getDisplayString("app.editor.external");
+		const contextUsage = this.session.getContextUsage();
+		const contextLine = contextUsage?.percent != null ? `  context: ${contextUsage.percent.toFixed(1)}% used` : "";
 		if (!externalEditorKey) {
-			return "up/down navigate  enter select  esc cancel";
+			return `up/down navigate  enter select  esc cancel${contextLine}`;
 		}
-		return `up/down navigate  enter select  ${externalEditorKey.toLowerCase()} open in editor  esc cancel`;
+		return `up/down navigate  enter select  ${externalEditorKey.toLowerCase()} open in editor  esc cancel${contextLine}`;
 	}
 
 	async #openPlanInExternalEditor(planFilePath: string): Promise<void> {
